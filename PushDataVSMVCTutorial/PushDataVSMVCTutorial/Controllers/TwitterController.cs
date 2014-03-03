@@ -1,21 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
+using PushDataVSMVCTutorial.OAuth.Twitter;
 using WSDAPILibrary;
+using PushDataVSMVCTutorial.Models.API;
 
 
 namespace PushDataVSMVCTutorial.Controllers
 {
-    public class TwitterController : Controller
+    public class TwitterController : ApiController
     {
         //
-        // GET: /Twitter/
-        
-        public ActionResult Index()
+        // GET: /api/Twitter/
+
+        [System.Web.Mvc.HttpGet]
+        //[RoutePrefix()]
+        public async Task<JToken> GetLiveData()
         {
-            return HttpResponses.Ok();
+            var tweets = new List<Tweets>();
+            var client = new HttpClient(new OAuthMessageHandler(new HttpClientHandler()));
+
+            // Send asynchronous request to twitter and read the response as JToken
+            var response = await client.GetAsync(Properties.Settings.Default.TwitterSearchCriteria);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpResponseException(response);
+            }
+
+            var statuses = await response.Content.ReadAsAsync<JToken>();
+            //Console.WriteLine("Most recent statuses from Keduce22's twitter account:");
+            var result = new { tweets = statuses };
+            //foreach (var status in statuses)
+            //{
+            //Console.WriteLine("   {0}", status["text"]);
+            //Console.WriteLine();
+            //result = new { "Most recent statuses from Keduce22's twitter account:" };
+            //}
+            //return HttpResponses.Ok();
+            return statuses;
         }
 
         //
@@ -23,7 +50,8 @@ namespace PushDataVSMVCTutorial.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            throw new NotImplementedException();
+            //return View();
         }
 
         //
@@ -31,16 +59,18 @@ namespace PushDataVSMVCTutorial.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            throw new NotImplementedException();
+            //return View();
         }
 
         //
         // POST: /Twitter/Create
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
+            throw new NotImplementedException();
+            /*try
             {
                 // TODO: Add insert logic here
 
@@ -49,7 +79,7 @@ namespace PushDataVSMVCTutorial.Controllers
             catch
             {
                 return View();
-            }
+            }*/
         }
 
         //
@@ -57,16 +87,18 @@ namespace PushDataVSMVCTutorial.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            throw new NotImplementedException();
+            //return View();
         }
 
         //
         // POST: /Twitter/Edit/5
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            throw new NotImplementedException();
+            /*try
             {
                 // TODO: Add update logic here
 
@@ -75,7 +107,7 @@ namespace PushDataVSMVCTutorial.Controllers
             catch
             {
                 return View();
-            }
+            }*/
         }
 
         //
@@ -83,16 +115,18 @@ namespace PushDataVSMVCTutorial.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            throw new NotImplementedException();
+            //return View();
         }
 
         //
         // POST: /Twitter/Delete/5
 
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            throw new NotImplementedException();
+            /*try
             {
                 // TODO: Add delete logic here
 
@@ -101,7 +135,7 @@ namespace PushDataVSMVCTutorial.Controllers
             catch
             {
                 return View();
-            }
+            }*/
         }
     }
 }

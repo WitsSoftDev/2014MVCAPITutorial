@@ -23,7 +23,7 @@ namespace WSDAPILibrary
 
         public ActionResult Ok<T>(T model)
         {
-            var result = new Result();
+            //var result = new Result();
             return new JsonResult();
         }
     }
