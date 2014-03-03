@@ -1,0 +1,1 @@
+CURL -i -H GET http://localhost:43564/api/values/5
