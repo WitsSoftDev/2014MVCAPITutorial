@@ -6,27 +6,26 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using AttributeRouting.Web.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PushDataVSMVCTutorial.OAuth.Twitter;
-using PushDataVSMVCTutorial.Models.API;
 using PushDataVSMVCTutorial.Services;
-
 
 namespace PushDataVSMVCTutorial.Controllers
 {
-    public class TwitterController : ApiController
+    public class UserController : ApiController
     {
         private readonly TwitterService _twitterService;
         private const string CacheKey = "TweetStore";
 
-        public TwitterController()
-        {
-            this._twitterService = new TwitterService();
-        }
+        /*TODO JMC
+         Get user info from twitter
+         Authentication
+         Get info from google maps
+         Build simple html website to display info
+         ability to then login and access some values controller*/
         //
-        // GET: /api/Twitter/
+        // GET: /User/
+
         //LESSON: Should this be a post?
         [System.Web.Mvc.HttpGet]
         //[Route("~/api/Twitter/GetLiveData")]
@@ -36,7 +35,7 @@ namespace PushDataVSMVCTutorial.Controllers
 
             //if (ctx != null)
             //{
-              //  return (JToken)ctx.Cache[CacheKey];
+            //  return (JToken)ctx.Cache[CacheKey];
             //}
 
             var client = new HttpClient(new OAuthMessageHandler(new HttpClientHandler()));
@@ -50,7 +49,7 @@ namespace PushDataVSMVCTutorial.Controllers
             }
 
             var tweets = await response.Content.ReadAsAsync<JToken>();
-            
+
             //now will have to get coordinates since Twitter Api does not support 
             //var result = JsonConvert.DeserializeObject<Tweets>(tweets.ToString());
             //var tweetIds = tweets["id"].Value<JObject>();
@@ -58,7 +57,7 @@ namespace PushDataVSMVCTutorial.Controllers
             //var stringOfTweets = JsonConvert.DeserializeObject<Tweets>(tweets.ToString());
             //var dataTableOfTweets = stringOfTweets.Ids;
             //var array = JArray.Parse(tweets.ToString());
-            Jtoken tweetList = tweets["statuses"].Values<JToken>();
+            JToken tweetList = tweets["statuses"].Values<JToken>();
             var ids = tweetList["id"].Value<string>();
             foreach (var i in ids)
             {
@@ -98,102 +97,9 @@ namespace PushDataVSMVCTutorial.Controllers
 
             if (ctx != null)
                 ctx.Cache[CacheKey] = tweets;
-            
+
 
             return tweets;
-        }
-
-        //
-        // GET: /Twitter/Details/5
-
-        public ActionResult Details(int id)
-        {
-            throw new NotImplementedException();
-            //return View();
-        }
-
-        //
-        // GET: /Twitter/Create
-
-        public ActionResult Create()
-        {
-            throw new NotImplementedException();
-            //return View();
-        }
-
-        //
-        // POST: /Twitter/Create
-
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            throw new NotImplementedException();
-            /*try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }*/
-        }
-
-        //
-        // GET: /Twitter/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            throw new NotImplementedException();
-            //return View();
-        }
-
-        //
-        // POST: /Twitter/Edit/5
-
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            throw new NotImplementedException();
-            /*try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }*/
-        }
-
-        //
-        // GET: /Twitter/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            throw new NotImplementedException();
-            //return View();
-        }
-
-        //
-        // POST: /Twitter/Delete/5
-
-        [System.Web.Mvc.HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            throw new NotImplementedException();
-            /*try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }*/
         }
     }
 }
