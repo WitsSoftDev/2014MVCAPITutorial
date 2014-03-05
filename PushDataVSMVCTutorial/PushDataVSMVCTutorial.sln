@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushDataVSMVCTutorial", "Pu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushDataVSMVCTutorial.Tests", "PushDataVSMVCTutorial.Tests\PushDataVSMVCTutorial.Tests.csproj", "{29E61758-BD42-4742-B9A2-566707B40962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSDAPILibrary", "WSDAPILibrary\WSDAPILibrary.csproj", "{9FB933BB-973C-49B5-B30D-46E9A07594FA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,10 +19,6 @@ Global
 		{29E61758-BD42-4742-B9A2-566707B40962}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E61758-BD42-4742-B9A2-566707B40962}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E61758-BD42-4742-B9A2-566707B40962}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FB933BB-973C-49B5-B30D-46E9A07594FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FB933BB-973C-49B5-B30D-46E9A07594FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FB933BB-973C-49B5-B30D-46E9A07594FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FB933BB-973C-49B5-B30D-46E9A07594FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

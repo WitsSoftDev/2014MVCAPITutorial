@@ -62,10 +62,29 @@ namespace PushDataVSMVCTutorial.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://api.twitter.com/1.1/statuses/user_timeline.json?include_rts=true&screen_n" +
-            "ame=Keduce22&count=20")]
+            "ame=Keduce22&geo_enabled=true&count=1")]
+        public string TwitterGetUserTimeline {
+            get {
+                return ((string)(this["TwitterGetUserTimeline"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.twitter.com/1.1/search/tweets.json?q=programming&coordinates!=null&re" +
+            "sult_type=recent&count=1&include_entities=true")]
         public string TwitterSearchCriteria {
             get {
                 return ((string)(this["TwitterSearchCriteria"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.twitter.com/1.1/statuses/show.json?id=")]
+        public string TwitterTweetCoordinates {
+            get {
+                return ((string)(this["TwitterTweetCoordinates"]));
             }
         }
     }

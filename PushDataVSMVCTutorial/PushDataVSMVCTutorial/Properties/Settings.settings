@@ -14,8 +14,14 @@
     <Setting Name="TwitterTokenSecret" Type="System.String" Scope="Application">
       <Value Profile="(Default)">8GIlFqmqqdpuRUcMTYYkGYzmWoeM6geODHjCLUQxgow8E</Value>
     </Setting>
+    <Setting Name="TwitterGetUserTimeline" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.twitter.com/1.1/statuses/user_timeline.json?include_rts=true&amp;screen_name=Keduce22&amp;geo_enabled=true&amp;count=1</Value>
+    </Setting>
     <Setting Name="TwitterSearchCriteria" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://api.twitter.com/1.1/statuses/user_timeline.json?include_rts=true&amp;screen_name=Keduce22&amp;count=20</Value>
+      <Value Profile="(Default)">https://api.twitter.com/1.1/search/tweets.json?q=programming&amp;coordinates!=null&amp;result_type=recent&amp;count=1&amp;include_entities=true</Value>
+    </Setting>
+    <Setting Name="TwitterTweetCoordinates" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.twitter.com/1.1/statuses/show.json?id=</Value>
     </Setting>
   </Settings>
 </SettingsFile>
