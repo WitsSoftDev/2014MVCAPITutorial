@@ -26,5 +26,8 @@
     <Setting Name="StaticGoogleMapApi" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://maps.googleapis.com/maps/api/staticmap?center=</Value>
     </Setting>
+    <Setting Name="DefaultStaticGoogleMapApi" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://maps.googleapis.com/maps/api/staticmap?center=South Africa,WA&amp;zoom=1&amp;size=800x800&amp;sensor=false</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

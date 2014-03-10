@@ -96,5 +96,15 @@ namespace PushDataVSMVCTutorial.Properties {
                 return ((string)(this["StaticGoogleMapApi"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://maps.googleapis.com/maps/api/staticmap?center=South Africa,WA&zoom=1&size=" +
+            "800x800&sensor=false")]
+        public string DefaultStaticGoogleMapApi {
+            get {
+                return ((string)(this["DefaultStaticGoogleMapApi"]));
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ using PushDataVSMVCTutorial.OAuth.Twitter;
 namespace PushDataVSMVCTutorial.Services
 {
     
-    public class TwitterService
+    public class TwitterService : ITwitterService
     {
         private const string CacheKey = "TweetStore";
 

@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 using PushDataVSMVCTutorial.Custom_Responses;
+using PushDataVSMVCTutorial.Custom_Responses.Exceptions;
 using PushDataVSMVCTutorial.Services;
 
 namespace PushDataVSMVCTutorial.Controllers
@@ -21,9 +22,9 @@ namespace PushDataVSMVCTutorial.Controllers
         //
         // GET: /User/
 
-        private readonly TwitterService _twitterService = new TwitterService();
+        private readonly ITwitterService _twitterService = new TwitterService();
         private readonly GoogleService _googleService = new GoogleService();
-        private readonly GeneralService _generalService = new GeneralService();
+        private readonly IGeneralService _generalService = new GeneralService();
 
 
         private const string CacheKey = "UserStore";
@@ -41,47 +42,48 @@ namespace PushDataVSMVCTutorial.Controllers
         [System.Web.Mvc.HttpGet]
         public async Task<HttpResponseMessage> Get(string userName)
         {
-            var ctx = System.Web.HttpContext.Current;
-
-            //if (ctx != null)
-            //{
-            //  return (JToken)ctx.Cache[CacheKey];
-            //}
-
             //async await to be completed
             var statuses = await _twitterService.GetUserTimelineData(userName);
 
             //now google maps
             //for now just workout link
-            string mapLoc = null;
             MemoryStream ms = null;
-            
-            foreach (var status in statuses.Where(status => string.IsNullOrWhiteSpace((string) status["place"])))
+
+            HttpResponseMessage response;
+
+            foreach (var status in statuses)
             {
-                mapLoc = _googleService.SaveMap(Properties.Settings.Default.StaticGoogleMapApi, (string)status["place"]);
-                if (string.IsNullOrWhiteSpace(mapLoc)) continue;
+                var mapLoc = userName + ".png";
+
+                if (!string.IsNullOrWhiteSpace((string) status["place"]))
+                {
+                    await _googleService.SaveMap(Properties.Settings.Default.StaticGoogleMapApi, userName);
+                }
+                else
+                {
+                    await _googleService.SaveMap(userName);
+                }
+                
                 var map = Image.FromFile(mapLoc);
                 var mapData = _generalService.ImageToByteArray(map);
                 ms = new MemoryStream(mapData);
             }
             
-            ctx.Cache[CacheKey] = statuses;
-
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-
+            //save user to 'database' just an xml file
             if (ms != null)
             {
-                response.Content = new StreamContent(ms);
+                response = new HttpResponseMessage(HttpStatusCode.OK) {Content = new StreamContent(ms)};
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
-            }
-            else
-            {
                 var apiResponse = new MemoryStream(_generalService.GetBytes(statuses.ToString()));
                 response.Content = new StreamContent(apiResponse);
-            }
 
+                return response;
+            }
+            var message = _generalService.GetBytes("The Map file was not found");
+            ms = new MemoryStream(message);
+            response = new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StreamContent(ms) };
+            
             return response;
         }
-
     }
 }

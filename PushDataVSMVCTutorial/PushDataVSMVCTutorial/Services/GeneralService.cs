@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PushDataVSMVCTutorial.Services
 {
-    public class GeneralService
+    public class GeneralService : IGeneralService
     {
         public byte[] ImageToByteArray(Image imageIn)
         {

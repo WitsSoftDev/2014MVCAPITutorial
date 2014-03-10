@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Custom_Responses\Exceptions\CustomHttpException.cs" />
     <Compile Include="Custom_Responses\HttpApiResponseMessage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -204,6 +205,8 @@
     <Compile Include="Models\API\Tweets.cs" />
     <Compile Include="Models\API\User.cs" />
     <Compile Include="Services\GeneralService.cs" />
+    <Compile Include="Services\IGeneralService.cs" />
+    <Compile Include="Services\ITwitterService.cs" />
     <Compile Include="Services\OAuth\Twitter\OAuthBase.cs" />
     <Compile Include="Services\OAuth\Twitter\OAuthMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -347,7 +350,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Custom_Responses\Errors\" />
-    <Folder Include="Custom_Responses\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -366,9 +368,9 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>43564</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:43564/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
