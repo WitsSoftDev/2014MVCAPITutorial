@@ -1,5 +1,12 @@
-﻿using System.Web;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
+using PushDataVSMVCTutorial.Custom_Responses;
 using PushDataVSMVCTutorial.Models.API;
+using PushDataVSMVCTutorial.OAuth.Twitter;
 
 namespace PushDataVSMVCTutorial.Services
 {
@@ -8,26 +15,24 @@ namespace PushDataVSMVCTutorial.Services
     {
         private const string CacheKey = "TweetStore";
 
-        public TwitterService()
+        /*TODO JMC Check result works*/
+        public async Task<JToken> GetUserTimelineData(string userName)
         {
-            /*to add static test data*/
-            /*var ctx = HttpContext.Current;
+            var client = new HttpClient(new OAuthMessageHandler(new HttpClientHandler()));
 
-            if (ctx == null) return;
-            if (ctx.Cache[CacheKey] != null) return;
-            var tweets = new Tweets[]
+            var address = Properties.Settings.Default.TwitterGetUserTimeline + userName;
+
+            // Send asynchronous request to twitter and read the response as JToken
+            var response = await client.GetAsync(address);
+
+            //should handle missing userName
+            if (!response.IsSuccessStatusCode)
             {
-                new Tweets
-                {
-                    Id = 1, Name = "Glenn Block"
-                },
-                new Tweets
-                {
-                    Id = 2, Name = "Dan Roth"
-                }
-            };
+                throw new HttpResponseException(response);
+            }
 
-            ctx.Cache[CacheKey] = tweets;*/
+            var twitterUserStatuses = await response.Content.ReadAsAsync<JToken>();
+            return twitterUserStatuses;
         }
 
 

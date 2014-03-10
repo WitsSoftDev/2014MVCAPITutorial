@@ -61,8 +61,8 @@ namespace PushDataVSMVCTutorial.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://api.twitter.com/1.1/statuses/user_timeline.json?include_rts=true&screen_n" +
-            "ame=Keduce22&geo_enabled=true&count=1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.twitter.com/1.1/statuses/user_timeline.json?include_rts=true&geo_enab" +
+            "led=true&count=1&screen_name=")]
         public string TwitterGetUserTimeline {
             get {
                 return ((string)(this["TwitterGetUserTimeline"]));
@@ -85,6 +85,15 @@ namespace PushDataVSMVCTutorial.Properties {
         public string TwitterTweetCoordinates {
             get {
                 return ((string)(this["TwitterTweetCoordinates"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://maps.googleapis.com/maps/api/staticmap?center=")]
+        public string StaticGoogleMapApi {
+            get {
+                return ((string)(this["StaticGoogleMapApi"]));
             }
         }
     }
