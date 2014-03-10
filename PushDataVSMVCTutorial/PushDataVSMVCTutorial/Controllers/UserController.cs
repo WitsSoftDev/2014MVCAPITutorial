@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
+using PushDataVSMVCTutorial.Custom_Responses;
 using PushDataVSMVCTutorial.Services;
 
 namespace PushDataVSMVCTutorial.Controllers
@@ -17,7 +23,8 @@ namespace PushDataVSMVCTutorial.Controllers
 
         private readonly TwitterService _twitterService = new TwitterService();
         private readonly GoogleService _googleService = new GoogleService();
-        
+        private readonly GeneralService _generalService = new GeneralService();
+
 
         private const string CacheKey = "UserStore";
 
@@ -28,11 +35,11 @@ namespace PushDataVSMVCTutorial.Controllers
          Build simple html website to display info
          ability to then login and access some values controller*/
         //
-        
+
         // GET api/user/{userName}
         //LESSON: Should this be a post?
         [System.Web.Mvc.HttpGet]
-        public async Task<JToken> Get(string userName)
+        public async Task<HttpResponseMessage> Get(string userName)
         {
             var ctx = System.Web.HttpContext.Current;
 
@@ -46,23 +53,34 @@ namespace PushDataVSMVCTutorial.Controllers
 
             //now google maps
             //for now just workout link
-
-            if (statuses.Children()["place"].Values() != null)
+            string mapLoc = null;
+            MemoryStream ms = null;
+            
+            foreach (var status in statuses.Where(status => string.IsNullOrWhiteSpace((string) status["place"])))
             {
-                throw new NotImplementedException();
+                mapLoc = _googleService.SaveMap(Properties.Settings.Default.StaticGoogleMapApi, (string)status["place"]);
+                if (string.IsNullOrWhiteSpace(mapLoc)) continue;
+                var map = Image.FromFile(mapLoc);
+                var mapData = _generalService.ImageToByteArray(map);
+                ms = new MemoryStream(mapData);
             }
-
-            /*foreach (var status in statuses)
-            {
-                Console.WriteLine("   {0}", status["text"]);
-                Console.WriteLine();
-            }*/
-
+            
             ctx.Cache[CacheKey] = statuses;
 
-            /*todo add responses*/
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            return statuses;
+            if (ms != null)
+            {
+                response.Content = new StreamContent(ms);
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+            }
+            else
+            {
+                var apiResponse = new MemoryStream(_generalService.GetBytes(statuses.ToString()));
+                response.Content = new StreamContent(apiResponse);
+            }
+
+            return response;
         }
 
     }
